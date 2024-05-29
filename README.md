@@ -1,8 +1,8 @@
 # ESRally Benchmarker Tool
 
 This project aims to simplify the process of creating and running custom tracks for ESRally. 
-This was put together once a couple of days for an interview so it is still barebones.
-There are janky parts especially in the parts relevant to the ui (./python/ui.py , ./python/esrally_operations.json). What can I say, I had a timelimit x_x
+This was put together in a couple of days so it is still barebones.
+There are janky parts especially in the parts relevant to the ui (./python/ui.py , ./python/esrally_operations.json). 
 Some QoL improvements  need to be made. Do bear with me, I'll try to make this more convenient going forward.
 
 ![Flow](./flow.png)
