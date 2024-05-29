@@ -1,0 +1,49 @@
+
+scrape_mode: hface # Set to "wiki" to use the wikipedia scraper. Set to "hface" to download a wikipedia dataset"
+
+openai: # Add your openai API key here
+  api_key: BLANK
+
+wikiscrape_settings: # Set only if mode is wiki
+  # Starting url is a wikipedia article where recursive scrape will begin
+  starting_url: https://en.wikipedia.org/wiki/Spaghetti_all%27assassina
+  index_name: wikipedia-spaghetti
+  max_depth: 3 # Maximum recursive depth (number of hops away from origin)
+  max_docs: 25 # Maximum number of documents to scrape. Each document is a wiki article
+
+huggingface_settings: # Set if mode is hface
+  # This will download a huggingface dataset
+  starting_url: microsoft/orca-math-word-problems-200k # Huggingface repo identifier
+  index_name: orca
+  full_url: https://huggingface.co/datasets/microsoft/orca-math-word-problems-200k # Web url will be used for GPT-4o
+
+storage_settings: # This is where data from wiki or huggingface will be saved to a CSV and subsequently uploaded to elastic.
+  scrape_filepath: temp/temp.csv
+
+cloud_creds:  # These are your elastic credentials.
+  id: lab01:YXNpYS1zb3... # Set your deployment ID
+  username: elastic # Elastic Username
+  password: BLANK # Elastic Password
+  api_key: BLANK # Elastic deployment API Key
+
+es_settings: # Replicas and shards for the elastic index
+  number_of_replicas: 1
+  number_of_shards: 3
+
+esrally_wiki: # Set if mode is "wiki". These are the ES Rally settings  
+  track_name: wikipedia-spaghetti 
+  target_hosts: https://lab01.es.asia-southeast1.gcp.elastic-cloud.com # Elastic hostname 
+  client_options: use_ssl:true,verify_certs:true,api_key:'BLANK' # Set api_key to your elastic cloud API Key
+  indices: wikipedia-spaghetti # Set this to your wikiscrape index name
+  output_path: tracks # Folder where custom tracks are built
+  track_path: tracks/wikipedia-spaghetti # Folder holding the custom track
+  pipeline: benchmark-only
+
+esrally_hface: 
+  track_name: orca
+  target_hosts: https://lab01.es.asia-southeast1.gcp.elastic-cloud.com # Elastic Hostname
+  client_options: use_ssl:true,verify_certs:true,api_key:'BLANK' # Set api_key to your elastic cloud API Key
+  indices: orca # Set this to your huggingface index name
+  output_path: tracks
+  track_path: tracks/orca
+  pipeline: benchmark-only

@@ -1,0 +1,62 @@
+[
+    {
+        "operation": "delete-index"
+    },
+    {
+        "operation": {
+            "operation-type": "create-index",
+            "settings": {}
+        }
+    },
+    {
+        "operation": {
+            "operation-type": "cluster-health",
+            "index": "wikipedia-spaghetti",
+            "request-params": {
+                "wait_for_status": "green",
+                "wait_for_no_relocating_shards": "true"
+            },
+            "retry-until-success": true
+        }
+    },
+    {
+        "operation": {
+            "operation-type": "bulk",
+            "bulk-size": 5000,
+            "ingest-percentage": 100
+        },
+        "clients": 8
+    },
+    {
+        "operation": {
+            "operation-type": "force-merge",
+            "max-num-segments": 1
+        }
+    },
+    {
+        "operation": {
+            "operation-type": "refresh"
+        }
+    },
+    {
+        "operation": {
+            "operation-type": "search",
+            "index": "wikipedia-spaghetti",
+            "body": {
+                "query": {
+                    "match_all": {}
+                }
+            }
+        }
+    },
+    {
+        "operation": {
+            "operation-type": "index-stats"
+        }
+    },
+    {
+        "operation": {
+            "operation-type": "node-stats"
+        }
+    }
+]

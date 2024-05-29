@@ -1,0 +1,46 @@
+{
+  "version": 2,
+  "description": "Tracker-generated track for wikipedia-spaghetti",
+  "indices": [
+    {
+      "name": "wikipedia-spaghetti",
+      "body": "wikipedia-spaghetti.json"
+    }
+  ],
+  "corpora": [
+    {
+      "name": "wikipedia-spaghetti",
+      "documents": [
+        {
+          "target-index": "wikipedia-spaghetti",
+          "source-file": "wikipedia-spaghetti-documents.json.bz2",
+          "document-count": 23,
+          "compressed-bytes": 110050,
+          "uncompressed-bytes": 375786
+        }
+      ]
+    }
+  ],
+  "schedule": [
+    {
+      "operation": "delete-index"
+    },
+    {
+      "operation": {
+        "operation-type": "create-index",
+        "settings": {}
+      }
+    },
+    {
+      "operation": {
+        "operation-type": "force-merge",
+        "max-num-segments": 1
+      }
+    },
+    {
+      "operation": {
+        "operation-type": "refresh"
+      }
+    }
+  ]
+}

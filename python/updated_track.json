@@ -1,0 +1,54 @@
+{
+  "version": 2,
+  "description": "Tracker-generated track for wikipedia-spaghetti",
+  "indices": [
+    {
+      "name": "wikipedia-spaghetti",
+      "body": "wikipedia-spaghetti.json"
+    }
+  ],
+  "corpora": [
+    {
+      "name": "wikipedia-spaghetti",
+      "documents": [
+        {
+          "target-index": "wikipedia-spaghetti",
+          "source-file": "wikipedia-spaghetti-documents.json.bz2",
+          "document-count": 927,
+          "compressed-bytes": 4140673,
+          "uncompressed-bytes": 15139829
+        }
+      ]
+    }
+  ],
+  "schedule": [
+    {
+      "operation": "delete-index"
+    },
+    {
+      "operation": {
+        "operation-type": "create-index",
+        "settings": {}
+      }
+    },
+    {
+      "operation": {
+        "operation-type": "bulk",
+        "bulk-size": 5000,
+        "ingest-percentage": 100
+      },
+      "clients": 8
+    },
+    {
+      "operation": {
+        "operation-type": "cluster-health",
+        "index": "wikipedia-spaghetti",
+        "request-params": {
+          "wait_for_status": "{{cluster_health | default('green')}}",
+          "wait_for_no_relocating_shards": "true"
+        },
+        "retry-until-success": true
+      }
+    }
+  ]
+}
